@@ -1,52 +1,45 @@
-/* Слайдер */
+// Слайдер
 let slideIndex = 0;
 const slides = document.querySelectorAll(".slides img");
 const prev = document.querySelector(".prev");
 const next = document.querySelector(".next");
 
-function showSlide(index) {
-  slides.forEach((img, i) => {
-    img.style.display = (i === index) ? "block" : "none";
+function showSlide(n) {
+  slides.forEach((slide, i) => {
+    slide.classList.remove("active");
+    if (i === n) slide.classList.add("active");
   });
 }
-showSlide(slideIndex);
 
-prev.addEventListener("click", () => {
-  slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+function changeSlide(dir) {
+  slideIndex += dir;
+  if (slideIndex >= slides.length) slideIndex = 0;
+  if (slideIndex < 0) slideIndex = slides.length - 1;
   showSlide(slideIndex);
-});
-next.addEventListener("click", () => {
-  slideIndex = (slideIndex + 1) % slides.length;
-  showSlide(slideIndex);
-});
-
-/* Таймер с flip-анимацией */
-function startCountdown(duration) {
-  let timer = duration, hours, minutes, seconds;
-
-  function updateDisplay(id, value) {
-    const el = document.getElementById(id);
-    if (el.textContent !== value) {
-      el.textContent = value;
-      el.classList.add("animate");
-      setTimeout(() => el.classList.remove("animate"), 700);
-    }
-  }
-
-  setInterval(() => {
-    hours = String(parseInt(timer / 3600, 10)).padStart(2, "0");
-    minutes = String(parseInt((timer % 3600) / 60, 10)).padStart(2, "0");
-    seconds = String(timer % 60).padStart(2, "0");
-
-    updateDisplay("hours", hours);
-    updateDisplay("minutes", minutes);
-    updateDisplay("seconds", seconds);
-
-    if (--timer < 0) {
-      timer = 0;
-    }
-  }, 1000);
 }
 
-// 24 часа = 86400 секунд
-startCountdown(86400);
+prev.addEventListener("click", () => changeSlide(-1));
+next.addEventListener("click", () => changeSlide(1));
+
+showSlide(slideIndex);
+
+// Таймер (24 години)
+let countdown = 24 * 60 * 60; // 24 часа в секундах
+const hoursEl = document.getElementById("hours");
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
+
+function updateTimer() {
+  let h = Math.floor(countdown / 3600);
+  let m = Math.floor((countdown % 3600) / 60);
+  let s = countdown % 60;
+
+  hoursEl.textContent = h.toString().padStart(2, "0");
+  minutesEl.textContent = m.toString().padStart(2, "0");
+  secondsEl.textContent = s.toString().padStart(2, "0");
+
+  if (countdown > 0) countdown--;
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
