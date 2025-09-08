@@ -1,77 +1,26 @@
-// Слайдер
-let slideIndex = 0;
-const slides = document.querySelectorAll(".slides img");
-const prev = document.querySelector(".prev");
-const next = document.querySelector(".next");
-
-function showSlide(n) {
-  slides.forEach(slide => slide.classList.remove("active"));
-  slides[n].classList.add("active");
-}
-showSlide(slideIndex);
-
-prev.addEventListener("click", () => {
-  slideIndex = (slideIndex - 1 + slides.length) % slides.length;
-  showSlide(slideIndex);
-});
-next.addEventListener("click", () => {
-  slideIndex = (slideIndex + 1) % slides.length;
-  showSlide(slideIndex);
-});
-
-// ✅ Flip таймер
-function createFlip(label) {
-  return `
-    <div class="flip-card" data-label="${label}">
-      <div class="digit top">00</div>
-      <div class="digit bottom">00</div>
-    </div>
-  `;
-}
-
-function updateFlip(card, newValue) {
-  const top = card.querySelector(".top");
-  const bottom = card.querySelector(".bottom");
-  const current = parseInt(top.textContent);
-
-  if (newValue !== current) {
-    card.classList.remove("animate");
-    void card.offsetWidth; // reset animation
-    card.classList.add("animate");
-
-    setTimeout(() => {
-      top.textContent = newValue.toString().padStart(2, "0");
-      bottom.textContent = newValue.toString().padStart(2, "0");
-    }, 250);
-  }
-}
-
 function startCountdown(duration) {
-  let timer = duration;
+  let timer = duration, hours, minutes, seconds;
+  const flip = document.getElementById("flip-countdown");
 
-  const countdown = document.getElementById("countdown");
-  countdown.innerHTML = `
-    ${createFlip("Години")}
-    ${createFlip("Хвилини")}
-    ${createFlip("Секунди")}
-  `;
+  function update() {
+    hours = parseInt(timer / 3600, 10);
+    minutes = parseInt((timer % 3600) / 60, 10);
+    seconds = parseInt(timer % 60, 10);
 
-  const [hoursCard, minutesCard, secondsCard] =
-    countdown.querySelectorAll(".flip-card");
+    flip.innerHTML = `
+      <div class="flip-unit">${hours.toString().padStart(2, '0')}<span class="flip-label">Год</span></div>
+      <div class="flip-unit">${minutes.toString().padStart(2, '0')}<span class="flip-label">Хв</span></div>
+      <div class="flip-unit">${seconds.toString().padStart(2, '0')}<span class="flip-label">Сек</span></div>
+    `;
 
-  setInterval(() => {
-    let hours = Math.floor(timer / 3600);
-    let minutes = Math.floor((timer % 3600) / 60);
-    let seconds = timer % 60;
+    if (--timer < 0) {
+      timer = 0;
+    }
+  }
 
-    updateFlip(hoursCard, hours);
-    updateFlip(minutesCard, minutes);
-    updateFlip(secondsCard, seconds);
-
-    if (--timer < 0) timer = duration;
-  }, 1000);
+  update();
+  setInterval(update, 1000);
 }
 
-window.onload = () => {
-  startCountdown(24 * 60 * 60); // 24 часа
-};
+// 24 часа = 86400 секунд
+startCountdown(24 * 60 * 60);
