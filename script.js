@@ -1,53 +1,52 @@
-// === Получаем дату следующей полуночи ===
-function getNextMidnight() {
-  let now = new Date();
-  let tomorrow = new Date(now);
-  tomorrow.setHours(24, 0, 0, 0);
-  return tomorrow.getTime();
+/* Слайдер */
+let slideIndex = 0;
+const slides = document.querySelectorAll(".slides img");
+const prev = document.querySelector(".prev");
+const next = document.querySelector(".next");
+
+function showSlide(index) {
+  slides.forEach((img, i) => {
+    img.style.display = (i === index) ? "block" : "none";
+  });
 }
+showSlide(slideIndex);
 
-let countdownDate = getNextMidnight();
+prev.addEventListener("click", () => {
+  slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+  showSlide(slideIndex);
+});
+next.addEventListener("click", () => {
+  slideIndex = (slideIndex + 1) % slides.length;
+  showSlide(slideIndex);
+});
 
-// === Обновление таймера ===
-function updateCountdown() {
-  let now = new Date().getTime();
-  let distance = countdownDate - now;
+/* Таймер с flip-анимацией */
+function startCountdown(duration) {
+  let timer = duration, hours, minutes, seconds;
 
-  if (distance < 0) {
-    countdownDate = getNextMidnight();
-    distance = countdownDate - now;
+  function updateDisplay(id, value) {
+    const el = document.getElementById(id);
+    if (el.textContent !== value) {
+      el.textContent = value;
+      el.classList.add("animate");
+      setTimeout(() => el.classList.remove("animate"), 700);
+    }
   }
 
-  let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  setInterval(() => {
+    hours = String(parseInt(timer / 3600, 10)).padStart(2, "0");
+    minutes = String(parseInt((timer % 3600) / 60, 10)).padStart(2, "0");
+    seconds = String(timer % 60).padStart(2, "0");
 
-  flipDigit("hours", hours);
-  flipDigit("minutes", minutes);
-  flipDigit("seconds", seconds);
+    updateDisplay("hours", hours);
+    updateDisplay("minutes", minutes);
+    updateDisplay("seconds", seconds);
 
-  const lastHourMsg = document.getElementById("last-hour-msg");
-  if (hours === 0) {
-    lastHourMsg.textContent = "⏳ Поспіши, залишилось менше години!";
-    lastHourMsg.style.display = "block";
-  } else {
-    lastHourMsg.style.display = "none";
-  }
+    if (--timer < 0) {
+      timer = 0;
+    }
+  }, 1000);
 }
 
-// === Анимация перелистывания ===
-function flipDigit(id, newNumber) {
-  const digit = document.getElementById(id);
-  const currentNumber = parseInt(digit.textContent, 10);
-
-  if (newNumber !== currentNumber) {
-    digit.classList.add("flip");
-    setTimeout(() => {
-      digit.textContent = newNumber.toString().padStart(2, "0");
-      digit.classList.remove("flip");
-    }, 300);
-  }
-}
-
-setInterval(updateCountdown, 1000);
-updateCountdown();
+// 24 часа = 86400 секунд
+startCountdown(86400);
