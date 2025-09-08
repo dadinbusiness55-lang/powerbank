@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Батарея мобільна Gelius Nexus</title>
+    <title>Батарея мобільна Gelius Nexus Magnetic Wireless 15W 5000mAh</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,29 +12,30 @@
         <h1>Батарея мобільна<br>
             Gelius Nexus Magnetic Wireless Charge 15W GP-PBW100i 5000mAh</h1>
         <p class="subtitle">Завжди на зв’язку – заряджай смартфон, навушники і навіть смарт-годинник</p>
-    </header>
 
-    <!-- Слайдер -->
-    <div class="slider">
-        <div class="slides">
-            <img src="images/powerbank1.jpg" alt="Фото 1">
-            <img src="images/powerbank2.jpg" alt="Фото 2">
-            <img src="images/powerbank3.jpg" alt="Фото 3">
-            <img src="images/powerbank4.jpg" alt="Фото 4">
-            <img src="images/powerbank5.jpg" alt="Фото 5">
-            <img src="images/powerbank6.jpg" alt="Фото 6">
-            <img src="images/powerbank7.jpg" alt="Фото 7">
-            <img src="images/powerbank0.jpg" alt="Фото 8">
+        <!-- ✅ Слайдер -->
+        <div class="slider">
+            <div class="slides">
+                <img src="images/powerbank1.jpg" alt="Фото 1">
+                <img src="images/powerbank2.jpg" alt="Фото 2">
+                <img src="images/powerbank3.jpg" alt="Фото 3">
+                <img src="images/powerbank4.jpg" alt="Фото 4">
+                <img src="images/powerbank5.jpg" alt="Фото 5">
+                <img src="images/powerbank6.jpg" alt="Фото 6">
+                <img src="images/powerbank7.jpg" alt="Фото 7">
+                <img src="images/powerbank0.jpg" alt="Фото 8">
+            </div>
+            <button class="prev">❮</button>
+            <button class="next">❯</button>
         </div>
-        <button class="prev">❮</button>
-        <button class="next">❯</button>
-    </div>
 
-    <!-- Акция -->
-    <section class="promo">
-        <h2>🔥 АКЦІЯ!</h2>
-        <p>Встигни замовити за вигідною ціною!</p>
-        <div id="countdown" class="flip-clock"></div>
+        <!-- ✅ Блок акции с таймером -->
+        <section class="promo">
+            <div class="promo-title">🔥 АКЦІЯ!</div>
+            <p>Встигни замовити за вигідною ціною!</p>
+            <div id="countdown" class="countdown"></div>
+        </section>
+
         <div class="price">
             <span class="old-price">1299 грн</span>
             <span class="new-price">999 грн</span>
@@ -44,10 +45,10 @@
             <a href="#order" class="btn btn-buy">🛒 Купити зараз</a>
             <a href="#order" class="btn btn-outline">Залишити заявку</a>
         </div>
-    </section>
+    </header>
 
     <!-- Характеристики -->
-    <section class="card" id="features">
+    <section class="features" id="features">
         <h2>Основні характеристики</h2>
         <ul>
             <li>⚡ Технологія зарядки: Power Delivery, Qi</li>
@@ -55,13 +56,15 @@
             <li>⚙️ Потужність: 15 Вт</li>
             <li>🔌 Вхід: 5V/3A, 9V/2A</li>
             <li>🔌 Вихід: 5V/3A, 9V/2,22A, 12V/1,67A</li>
+            <li>📟 Вихідна напруга: 5В/9В/12В</li>
+            <li>🔋 Слотів зарядки: 2</li>
             <li>📟 Індикатор заряду: так</li>
-            <li>🔗 Роз’єми: 1×Type-C, MagSafe</li>
-            <li>🔌 Кабель: USB Type-C</li>
+            <li>🔗 Тип роз'єму: 1×Type-C, MagSafe</li>
+            <li>🔌 Кабель в комплекті: USB Type-C</li>
             <li>⚡ Особливості: швидка зарядка, бездротова зарядка</li>
             <li>🔋 Тип акумулятора: Li-Pol</li>
             <li>📱 Сумісність: смартфони, навушники, смарт-годинники</li>
-            <li>📦 Комплектація: powerbank, кабель, інструкція, гарантійний талон</li>
+            <li>📦 Комплектація: Powerbank, кабель, інструкція, гарантійний талон</li>
             <li>⚖️ Вага: 185 г</li>
             <li>📐 Розміри: 99×64,5×10 мм</li>
             <li>🎨 Колір: синій</li>
@@ -72,23 +75,25 @@
     </section>
 
     <!-- Відгуки -->
-    <section class="card" id="reviews">
+    <section class="reviews" id="reviews">
         <h2>Відгуки покупців</h2>
         <div class="review">
             <div class="review-header">
-                ⭐⭐⭐⭐⭐ <span class="date">29 серпня 2025</span>
+                <span class="stars">⭐⭐⭐⭐⭐</span>
+                <span class="date">29 серпня 2025</span>
             </div>
             <h3>Владислав</h3>
+            <p class="used">понад 3 місяці у використанні</p>
             <p>Дуже зручна річ, виручає сильно.<br><strong>Переваги:</strong> компактно.</p>
         </div>
     </section>
 
-    <!-- Заявка -->
-    <section class="card" id="order">
+    <!-- Форма заявки -->
+    <section class="order" id="order">
         <h2>Залишити заявку</h2>
-        <form>
-            <input type="text" placeholder="Ваше ім’я" required>
-            <input type="tel" placeholder="Ваш телефон" required>
+        <form action="#" method="post">
+            <input type="text" name="name" placeholder="Ваше ім’я" required>
+            <input type="tel" name="phone" placeholder="Ваш телефон" required>
             <button type="submit" class="btn">Відправити</button>
         </form>
     </section>
