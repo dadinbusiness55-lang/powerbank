@@ -1,300 +1,152 @@
-/* === Базовые стили === */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f7f9fc;
-    color: #222;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #2f3e52; /* ✅ тёмный фон */
+  color: white;
+  text-align: center;
 }
 
-/* === Навигация === */
+/* Навигация */
 .tabs {
-    display: flex;
-    justify-content: center;
-    background: #222;
-    padding: 10px;
+  display: flex;
+  justify-content: center;
+  background: #111;
+  padding: 10px;
 }
 .tabs a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
-    padding: 8px 12px;
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  padding: 8px 12px;
 }
 .tabs a.active, .tabs a:hover {
-    background: #ff3333;
-    border-radius: 5px;
+  background: #ff3333;
+  border-radius: 5px;
 }
 
-/* === Шапка === */
+/* Заголовок */
 .hero {
-    text-align: center;
-    padding: 20px;
-}
-.hero h1 {
-    font-size: 26px;
-    margin-bottom: 10px;
+  padding: 30px;
 }
 .subtitle {
-    color: #555;
-    margin-bottom: 20px;
+  color: #ccc;
 }
 
-/* === Слайдер === */
-.slider {
-    position: relative;
-    max-width: 400px;
-    margin: 0 auto 20px;
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+/* Flip Countdown */
+.flip-countdown {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
 }
-.slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
+.flip-unit {
+  perspective: 1000px;
+  text-align: center;
 }
-.slides img {
-    width: 100%;
-    border-radius: 12px;
-    cursor: pointer;
+.flip-unit::after {
+  content: attr(data-label);
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #ddd;
 }
-.prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.6);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 50%;
+.digit {
+  position: relative;
+  display: inline-block;
+  background: #111;
+  color: #00ffcc;
+  font-size: 48px;
+  font-weight: bold;
+  padding: 20px 30px;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+  font-family: "Courier New", monospace;
+  min-width: 80px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
 }
-.prev { left: 10px; }
-.next { right: 10px; }
-.dots {
-    text-align: center;
-    margin-top: 10px;
-}
-.dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 0 4px;
-    background: #bbb;
-    border-radius: 50%;
-    cursor: pointer;
-}
-.dot.active { background: #ff3333; }
-
-/* === Блок акции === */
-.promo {
-    text-align: center;
-    background: #fff5f5;
-    padding: 25px;
-    border-radius: 15px;
-    margin: 30px auto;
-    max-width: 600px;
-    border: 3px solid #ff3333;
-    box-shadow: 0 5px 20px rgba(255, 51, 51, 0.2);
-}
-.promo-title {
-    background: linear-gradient(135deg, #ff0000, #ff6600);
-    color: white;
-    font-size: 32px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 8px;
-    display: inline-block;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-.countdown {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 15px;
-}
-.countdown div {
-    background: white;
-    border: 2px solid #ff3333;
-    border-radius: 10px;
-    padding: 15px 25px;
-    text-align: center;
-    min-width: 90px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.countdown span {
-    display: block;
-    font-size: 34px;
-    font-weight: bold;
-    color: #ff3333;
-}
-.countdown small {
-    font-size: 14px;
-    color: #444;
+.digit.flip {
+  transform: rotateX(-180deg);
 }
 .last-hour {
-    margin-top: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #e60000;
-    display: none;
-    animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.05); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 1; }
-}
-.blink {
-    color: #ff3333;
-    animation: blink 1s infinite alternate;
-}
-@keyframes blink {
-    from { opacity: 1; }
-    to { opacity: 0.5; }
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff6666;
+  display: none;
 }
 
-/* === Цены и кнопки === */
+/* Цены */
 .price {
-    margin: 15px 0;
+  margin: 20px 0;
 }
 .old-price {
-    text-decoration: line-through;
-    color: #777;
-    margin-right: 10px;
+  text-decoration: line-through;
+  color: #aaa;
+  margin-right: 10px;
 }
 .new-price {
-    font-size: 22px;
-    font-weight: bold;
-    color: #e60000;
+  font-size: 22px;
+  font-weight: bold;
+  color: #00ffcc;
 }
 .sale {
-    background: #ff0000;
-    color: #fff;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 14px;
-    margin-left: 10px;
+  background: #ff0000;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-left: 10px;
 }
+
+/* Кнопки */
 .buttons .btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
 }
 .btn-buy {
-    background: orange;
-    color: white;
+  background: #ff6600;
+  color: white;
 }
 .btn-outline {
-    border: 2px solid orange;
-    color: orange;
-    background: transparent;
+  border: 2px solid #ff6600;
+  color: #ff6600;
+  background: transparent;
 }
 .btn:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
-/* === Характеристики === */
-.features {
-    padding: 20px;
-}
-.features ul {
-    list-style: none;
-    padding: 0;
-}
-.features li {
-    padding: 5px 0;
-}
-
-/* === Відгуки === */
+/* Отзывы */
 .reviews {
-    padding: 20px;
+  padding: 20px;
 }
 .review {
-    background: white;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: #1e2a38;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
 }
 .review-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
 }
 .stars { color: gold; }
 
-/* === Лайтбокс === */
-.lightbox {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    padding-top: 50px;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9);
-    text-align: center;
+/* Форма */
+.order {
+  padding: 20px;
 }
-.lightbox-content {
-    max-width: 80%;
-    max-height: 80vh;
-}
-.close {
-    position: absolute;
-    top: 20px; right: 35px;
-    font-size: 40px;
-    color: white;
-    cursor: pointer;
-}
-.lightbox-prev, .lightbox-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.2);
-    border: none;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 50%;
-}
-.lightbox-prev { left: 20px; }
-.lightbox-next { right: 20px; }
-.thumbnails {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 15px;
-}
-.thumbnails img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border: 2px solid transparent;
-    cursor: pointer;
-    border-radius: 6px;
-}
-.thumbnails img.active {
-    border-color: #ff3333;
-}
-
-/* === Адаптивность === */
-@media (max-width: 768px) {
-    .promo { padding: 15px; max-width: 90%; }
-    .promo-title { font-size: 24px; padding: 8px 15px; }
-    .countdown { gap: 10px; }
-    .countdown div { padding: 10px 15px; min-width: 65px; }
-    .countdown span { font-size: 24px; }
-    .countdown small { font-size: 12px; }
-    .last-hour { font-size: 14px; }
-}
-@media (max-width: 480px) {
-    .promo-title { font-size: 20px; }
-    .countdown div { padding: 8px 10px; min-width: 55px; }
-    .countdown span { font-size: 20px; }
-    .countdown small { font-size: 11px; }
+.order input, .order button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 80%;
+  max-width: 400px;
 }
