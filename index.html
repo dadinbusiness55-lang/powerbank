@@ -73,7 +73,7 @@
             opacity: 0.9;
         }
         
-        /* Галерея - ИСПРАВЛЕНА */
+        /* Галерея */
         .gallery-container {
             max-width: 800px;
             margin: 30px auto;
@@ -81,7 +81,7 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            height: 400px; /* Фиксированная высота */
+            height: 400px;
         }
         
         .slides {
@@ -93,11 +93,11 @@
         .slides img {
             width: 100%;
             flex-shrink: 0;
-            object-fit: contain; /* Изменено на contain чтобы все фото влезали */
+            object-fit: contain;
             height: 100%;
             cursor: pointer;
-            background: #fff; /* Белый фон для фото с прозрачностью */
-            padding: 10px; /* Отступ внутри рамки */
+            background: #fff;
+            padding: 10px;
         }
         
         .gallery-nav {
@@ -222,7 +222,7 @@
             display: none;
         }
         
-        /* Ціна - ИЗМЕНЕНА */
+        /* Ціна */
         .price {
             margin: 30px 0;
         }
@@ -453,6 +453,8 @@
             
             .tabs a {
                 margin: 5px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
             }
             
             .countdown {
@@ -476,6 +478,8 @@
             .btn {
                 width: 100%;
                 max-width: 300px;
+                padding: 12px 20px;
+                font-size: 1rem;
             }
             
             .features ul {
@@ -483,7 +487,83 @@
             }
             
             .gallery-container {
-                height: 300px; /* Меньшая высота на мобильных */
+                height: 300px;
+            }
+            
+            .gallery-nav button {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .thumbnails img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .promo-title {
+                font-size: 1.5rem;
+            }
+            
+            .new-price {
+                font-size: 2rem;
+            }
+            
+            .old-price {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .gallery-container {
+                height: 250px;
+            }
+            
+            .countdown div {
+                min-width: 50px;
+                padding: 8px;
+            }
+            
+            .countdown span {
+                font-size: 1.5rem;
+            }
+            
+            .countdown small {
+                font-size: 0.8rem;
+            }
+            
+            .thumbnails {
+                gap: 5px;
+            }
+            
+            .thumbnails img {
+                width: 40px;
+                height: 40px;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .features li {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .review {
+                padding: 15px;
             }
         }
         
@@ -540,6 +620,23 @@
         
         .lightbox-nav button:hover {
             background: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Загрузчик */
+        .loader {
+            display: none;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -616,10 +713,10 @@
                         <small>Секунд</small>
                     </div>
                 </div>
-                <p class="last-hour">Залишилась меньше година до завершення акції!</p>
+                <p id="last-hour-msg" class="last-hour">Залишилась меньше година до завершення акції!</p>
             </section>
 
-            <!-- Ціна - ИЗМЕНЕНА -->
+            <!-- Ціна -->
             <div class="price">
                 <span class="old-price">1499 грн</span>
                 <span class="new-price">699 грн</span>
@@ -715,6 +812,7 @@
                 <input type="tel" name="phone" placeholder="Ваш телефон" required>
                 <button type="submit" class="btn">Відправити заявку</button>
             </form>
+            <div class="loader" id="form-loader"></div>
             <div id="form-message" class="form-message"></div>
         </div>
     </section>
@@ -751,6 +849,7 @@
             const closeLightbox = document.querySelector('.close');
             const orderForm = document.getElementById('order-form');
             const formMessage = document.getElementById('form-message');
+            const formLoader = document.getElementById('form-loader');
             
             let currentIndex = 0;
             const totalImages = images.length;
@@ -881,11 +980,15 @@
                 const name = formData.get('name');
                 const phone = formData.get('phone');
                 
+                // Показать загрузчик и скрыть предыдущие сообщения
+                formLoader.style.display = 'block';
+                formMessage.style.display = 'none';
+                
                 // Замените YOUR_BOT_TOKEN на токен вашего бота и YOUR_CHAT_ID на ваш chat_id
                 const botToken = '8386512970:AAH7l0bbdpvWqSMDlenlgRfy4wPnG4zHQYk';
-                const chatId = '-1003065158991';
+                const chatId = '8386512970';
                 
-                const message = `🔔 Новая заявка с сайта:%0A%0A👤 Имя: ${name}%0A📞 Телефон: ${phone}%0A%0A🛒 Товар: Powerbank Gelius Nexus`;
+                const message = `🔔 Новая заявка с сайта:%0A%0A👤 Имя: ${encodeURIComponent(name)}%0A📞 Телефон: ${encodeURIComponent(phone)}%0A%0A🛒 Товар: Powerbank Gelius Nexus`;
                 
                 // Отправка сообщения в Telegram
                 fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`, {
@@ -893,6 +996,8 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    formLoader.style.display = 'none';
+                    
                     if (data.ok) {
                         formMessage.textContent = '✅ Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.';
                         formMessage.className = 'form-message form-success';
@@ -908,6 +1013,7 @@
                     }
                 })
                 .catch(error => {
+                    formLoader.style.display = 'none';
                     formMessage.textContent = '❌ Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.';
                     formMessage.className = 'form-message form-error';
                     formMessage.style.display = 'block';
@@ -922,4 +1028,3 @@
     </script>
 </body>
 </html>
-
