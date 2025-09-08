@@ -73,7 +73,7 @@
             opacity: 0.9;
         }
         
-        /* Галерея */
+        /* Галерея - ИСПРАВЛЕНА */
         .gallery-container {
             max-width: 800px;
             margin: 30px auto;
@@ -81,19 +81,23 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            height: 400px; /* Фиксированная высота */
         }
         
         .slides {
             display: flex;
             transition: transform 0.5s ease;
+            height: 100%;
         }
         
         .slides img {
             width: 100%;
             flex-shrink: 0;
-            object-fit: cover;
-            height: 400px;
+            object-fit: contain; /* Изменено на contain чтобы все фото влезали */
+            height: 100%;
             cursor: pointer;
+            background: #fff; /* Белый фон для фото с прозрачностью */
+            padding: 10px; /* Отступ внутри рамки */
         }
         
         .gallery-nav {
@@ -218,7 +222,7 @@
             display: none;
         }
         
-        /* Ціна */
+        /* Ціна - ИЗМЕНЕНА */
         .price {
             margin: 30px 0;
         }
@@ -335,7 +339,7 @@
         }
         
         /* Відгуки */
-        .reviews {
+        .reviews-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
@@ -408,6 +412,27 @@
             background: #219653;
         }
         
+        /* Сообщения формы */
+        .form-message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .form-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .form-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
         /* Футер */
         footer {
             background: #2c3e50;
@@ -455,6 +480,10 @@
             
             .features ul {
                 grid-template-columns: 1fr;
+            }
+            
+            .gallery-container {
+                height: 300px; /* Меньшая высота на мобильных */
             }
         }
         
@@ -527,7 +556,7 @@
         <div class="container">
             <h1>Батарея мобільна<br>
                 Gelius Nexus Magnetic Wireless Charge 15W GP-PBW100i 5000mAh</h1>
-            <p class="subtitle">Завжди на зв’язку – заряджай смартфон, навушники і навіть смарт-годинник</p>
+            <p class="subtitle">Завжди на зв'язку – заряджай смартфон, навушники і навіть смарт-годинник</p>
 
             <!-- Галерея -->
             <div class="gallery-container">
@@ -571,7 +600,7 @@
 
             <!-- Таймер акції -->
             <section class="promo">
-                <div class="promo-title">🔥 АКЦІЯ! ЗНИЖКА 23%</div>
+                <div class="promo-title">🔥 АКЦІЯ! ЗНИЖКА 53%</div>
                 <p>Замовте зараз та отримайте безкоштовну доставку!</p>
                 <div class="countdown">
                     <div>
@@ -590,11 +619,11 @@
                 <p class="last-hour">Залишилась меньше година до завершення акції!</p>
             </section>
 
-            <!-- Ціна -->
+            <!-- Ціна - ИЗМЕНЕНА -->
             <div class="price">
-                <span class="old-price">1299 грн</span>
-                <span class="new-price">999 грн</span>
-                <span class="sale">-23%</span>
+                <span class="old-price">1499 грн</span>
+                <span class="new-price">699 грн</span>
+                <span class="sale">-53%</span>
             </div>
 
             <!-- Кнопки -->
@@ -617,7 +646,7 @@
                 <li>🔌 Вихід: 5V/3A, 9V/2,22A, 12V/1,67A</li>
                 <li>🔋 Слотів зарядки: 2</li>
                 <li>📟 Індикатор заряду: так</li>
-                <li>🔗 Роз’єми: 1×Type-C, MagSafe</li>
+                <li>🔗 Роз'єми: 1×Type-C, MagSafe</li>
                 <li>🔌 Кабель: USB Type-C</li>
                 <li>⚡ Особливості: швидка зарядка, бездротова зарядка</li>
                 <li>🔋 Тип акумулятора: Li-Pol</li>
@@ -637,7 +666,7 @@
     <section class="reviews" id="reviews">
         <div class="container">
             <h2>Відгуки покупців</h2>
-            <div class="reviews">
+            <div class="reviews-container">
                 <div class="review">
                     <div class="review-header">
                         <span class="stars">⭐⭐⭐⭐⭐</span>
@@ -673,7 +702,7 @@
     <section class="accessories" id="accessories">
         <div class="container">
             <h2>Аксесуари</h2>
-            <p>Скоро тут з’являться сумісні кабелі, чохли та інші товари 🚀</p>
+            <p>Скоро тут з'являться сумісні кабелі, чохли та інші товари 🚀</p>
         </div>
     </section>
 
@@ -681,11 +710,12 @@
     <section class="order" id="order">
         <div class="container">
             <h2>Залишити заявку</h2>
-            <form action="#" method="post">
-                <input type="text" name="name" placeholder="Ваше ім’я" required>
+            <form id="order-form">
+                <input type="text" name="name" placeholder="Ваше ім'я" required>
                 <input type="tel" name="phone" placeholder="Ваш телефон" required>
-                <button type="submit" class="btn">Відправити</button>
+                <button type="submit" class="btn">Відправити заявку</button>
             </form>
+            <div id="form-message" class="form-message"></div>
         </div>
     </section>
 
@@ -719,6 +749,8 @@
             const lightboxPrev = document.querySelector('.lightbox-prev');
             const lightboxNext = document.querySelector('.lightbox-next');
             const closeLightbox = document.querySelector('.close');
+            const orderForm = document.getElementById('order-form');
+            const formMessage = document.getElementById('form-message');
             
             let currentIndex = 0;
             const totalImages = images.length;
@@ -838,6 +870,52 @@
                             });
                         }
                     }
+                });
+            });
+            
+            // Отправка формы в Telegram
+            orderForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const name = formData.get('name');
+                const phone = formData.get('phone');
+                
+                // Замените YOUR_BOT_TOKEN на токен вашего бота и YOUR_CHAT_ID на ваш chat_id
+                const botToken = 'YOUR_BOT_TOKEN';
+                const chatId = 'YOUR_CHAT_ID';
+                
+                const message = `🔔 Новая заявка с сайта:%0A%0A👤 Имя: ${name}%0A📞 Телефон: ${phone}%0A%0A🛒 Товар: Powerbank Gelius Nexus`;
+                
+                // Отправка сообщения в Telegram
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`, {
+                    method: 'GET'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        formMessage.textContent = '✅ Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.';
+                        formMessage.className = 'form-message form-success';
+                        formMessage.style.display = 'block';
+                        orderForm.reset();
+                        
+                        // Скрыть сообщение через 5 секунд
+                        setTimeout(() => {
+                            formMessage.style.display = 'none';
+                        }, 5000);
+                    } else {
+                        throw new Error('Ошибка отправки');
+                    }
+                })
+                .catch(error => {
+                    formMessage.textContent = '❌ Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.';
+                    formMessage.className = 'form-message form-error';
+                    formMessage.style.display = 'block';
+                    
+                    // Скрыть сообщение через 5 секунд
+                    setTimeout(() => {
+                        formMessage.style.display = 'none';
+                    }, 5000);
                 });
             });
         });
