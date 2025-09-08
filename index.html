@@ -1,22 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Батарея мобільна Gelius Nexus Magnetic Wireless 15W 5000mAh</title>
+  <title>Powerbank Gelius</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <!-- Шапка -->
   <header class="hero">
-    <h1>Батарея мобільна<br>
-      Gelius Nexus Magnetic Wireless Charge 15W GP-PBW100i 5000mAh</h1>
-    <p class="subtitle">Завжди на зв’язку – заряджай смартфон, навушники і навіть смарт-годинник</p>
+    <h1>Батарея мобільна<br>Gelius Nexus Magnetic Wireless 15W 5000mAh</h1>
+    <p>Завжди на зв’язку – заряджай смартфон, навушники і навіть смарт-годинник</p>
   </header>
 
-  <!-- ✅ Слайдер -->
-  <section class="slider">
+  <!-- Слайдер -->
+  <div class="slider">
     <div class="slides">
       <img src="images/powerbank1.jpg" alt="Фото 1">
       <img src="images/powerbank2.jpg" alt="Фото 2">
@@ -29,24 +28,67 @@
     </div>
     <button class="prev">❮</button>
     <button class="next">❯</button>
-  </section>
+  </div>
 
-  <!-- ✅ Блок акции -->
+  <!-- Акція -->
   <section class="promo">
     <h2>🔥 АКЦІЯ!</h2>
     <p>Встигни замовити за вигідною ціною!</p>
-    <div id="countdown" class="countdown">
-      <div class="time-block"><div class="flip" id="hours">24</div><span>Годин</span></div>
-      <div class="time-block"><div class="flip" id="minutes">00</div><span>Хвилин</span></div>
-      <div class="time-block"><div class="flip" id="seconds">00</div><span>Секунд</span></div>
+    <div id="flip-timer" class="flip-timer">
+      <div class="flip-unit">
+        <div class="digit" id="hours">24</div>
+        <span>HOURS</span>
+      </div>
+      <div class="flip-unit">
+        <div class="digit" id="minutes">00</div>
+        <span>MINS</span>
+      </div>
+      <div class="flip-unit">
+        <div class="digit" id="seconds">00</div>
+        <span>SECS</span>
+      </div>
+    </div>
+    <div class="price">
+      <span class="old-price">1299 грн</span>
+      <span class="new-price">999 грн</span>
     </div>
   </section>
 
-  <div class="price">
-    <span class="old-price">1299 грн</span>
-    <span class="new-price">999 грн</span>
-    <span class="sale">АКЦІЯ!</span>
-  </div>
+  <!-- Характеристики -->
+  <section id="features">
+    <h2>Характеристики</h2>
+    <ul>
+      <li>⚡ Технологія зарядки: Power Delivery, Qi</li>
+      <li>🔋 Ємність: 5000 мАh</li>
+      <li>⚙️ Потужність: 15 Вт</li>
+      <li>🔌 Вхід: 5V/3A, 9V/2A</li>
+      <li>🔌 Вихід: 5V/3A, 9V/2,22A, 12V/1,67A</li>
+      <li>🔋 Слотів зарядки: 2</li>
+      <li>📟 Індикатор заряду: так</li>
+    </ul>
+  </section>
+
+  <!-- Відгуки -->
+  <section id="reviews">
+    <h2>Відгуки покупців</h2>
+    <p>⭐⭐⭐⭐⭐ Владислав: Дуже зручна річ, виручає сильно.</p>
+    <p>⭐⭐⭐ Аліна: Компактний, але гріється, заряджає повільно.</p>
+    <p>⭐⭐⭐⭐⭐ Леонід: Корисний павербанк, швидка зарядка.</p>
+  </section>
+
+  <!-- Форма -->
+  <section id="order">
+    <h2>Залишити заявку</h2>
+    <form>
+      <input type="text" placeholder="Ваше ім’я" required>
+      <input type="tel" placeholder="Ваш телефон" required>
+      <button type="submit">Відправити</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Powerbank Store | Gelius</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
