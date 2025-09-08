@@ -1,80 +1,107 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  background: #2f3e52; /* тёмно-синий фон */
+  font-family: Arial, sans-serif;
+  background: #2f3e52; /* фон как на твоём фото */
   color: #fff;
   text-align: center;
+}
+
+/* Шапка */
+.hero {
+  padding: 20px;
+}
+.subtitle {
+  color: #ccc;
 }
 
 /* Слайдер */
 .slider {
   position: relative;
-  max-width: 400px;   /* фикс ширины */
-  margin: 20px auto;  /* центрирование */
+  max-width: 500px;
+  margin: 20px auto;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 .slider img {
   width: 100%;
-  display: block;
-  border-radius: 12px;
+  height: 350px;
+  object-fit: contain;
+  background: #fff;
 }
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.prev { left: 10px; }
+.next { right: 10px; }
 
 /* Акция */
 .promo {
-  background: #1e2a38;
+  margin: 30px auto;
   padding: 20px;
-  margin: 20px auto;
+  background: #1e2a38;
   border-radius: 12px;
-  max-width: 600px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  max-width: 700px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
-.promo-title {
-  font-size: 28px;
-  font-weight: bold;
-  color: #ff4444;
-  margin-bottom: 10px;
-}
-
-/* Таймер горизонтальный */
-.flip-countdown {
+.countdown {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-top: 15px;
 }
-.flip-unit {
-  perspective: 1000px;
-}
-.digit {
-  background: #111;
-  color: #00ffcc;
-  font-size: 36px;
-  font-weight: bold;
-  padding: 15px 20px;
-  border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.5);
-  min-width: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.flip-unit::after {
-  content: attr(data-label);
-  display: block;
-  font-size: 14px;
-  color: #ccc;
-  margin-top: 5px;
+.time-block {
   text-align: center;
 }
+.flip {
+  background: #000;
+  color: #00ffcc;
+  font-size: 50px;
+  font-weight: bold;
+  width: 90px;
+  height: 80px;
+  line-height: 80px;
+  border-radius: 6px;
+  margin: 0 auto 10px;
+  font-family: "Courier New", monospace;
+  position: relative;
+  perspective: 1000px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+}
+.flip.animate {
+  animation: flip 0.7s ease;
+}
+@keyframes flip {
+  0% { transform: rotateX(0); }
+  50% { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0); }
+}
 
-/* Блоки (характеристики/отзывы) */
-section {
-  background: #1e2a38;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 800px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+/* Цены */
+.price {
+  margin: 20px;
+}
+.old-price {
+  text-decoration: line-through;
+  color: #aaa;
+  margin-right: 10px;
+}
+.new-price {
+  font-size: 26px;
+  font-weight: bold;
+  color: #00ffcc;
+}
+.sale {
+  background: red;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
 }
