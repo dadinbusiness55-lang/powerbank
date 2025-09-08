@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Батарея мобільна Gelius Nexus Magnetic Wireless 15W 5000mAh</title>
-    <!-- ✅ правильный путь -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -31,6 +30,12 @@
             </div>
             <button class="prev">❮</button>
             <button class="next">❯</button>
+            <div class="dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
         </div>
 
         <div class="price">
@@ -73,7 +78,6 @@
     <!-- Відгуки -->
     <section class="reviews" id="reviews">
         <h2>Відгуки покупців</h2>
-
         <div class="review">
             <div class="review-header">
                 <span class="stars">⭐⭐⭐⭐⭐</span>
@@ -83,7 +87,6 @@
             <p class="used">понад 3 місяці у використанні</p>
             <p>Дуже зручна річ, виручає сильно.<br><strong>Переваги:</strong> компактно.</p>
         </div>
-
         <div class="review">
             <div class="review-header">
                 <span class="stars">⭐⭐⭐</span>
@@ -93,7 +96,6 @@
             <p class="used">понад 6 місяців у використанні</p>
             <p>Компактний, але сильно гріється, заряджає повільно.<br><strong>Недолік:</strong> не підійшов для мого Samsung.</p>
         </div>
-
         <div class="review">
             <div class="review-header">
                 <span class="stars">⭐⭐⭐⭐⭐</span>
@@ -125,7 +127,24 @@
         <p>© 2025 Powerbank Store | Gelius</p>
     </footer>
 
-    <!-- ✅ правильный путь -->
+    <!-- ✅ Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="close">&times;</span>
+        <button class="lightbox-prev">❮</button>
+        <div class="lightbox-inner">
+            <div class="zoom-container">
+                <img class="lightbox-content" id="lightbox-img">
+            </div>
+            <div class="thumbnails">
+                <img src="images/powerbank1.jpg" alt="thumb1">
+                <img src="images/powerbank2.jpg" alt="thumb2">
+                <img src="images/powerbank3.jpg" alt="thumb3">
+                <img src="images/powerbank4.jpg" alt="thumb4">
+            </div>
+        </div>
+        <button class="lightbox-next">❯</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
