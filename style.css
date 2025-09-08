@@ -1,100 +1,67 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #2c3e50;
+    background: #2e3b4e; /* фон как на картинке */
     color: #fff;
     text-align: center;
 }
 
-/* Слайдер */
+.hero {
+    padding: 20px;
+}
+
 .slider {
-    position: relative;
     max-width: 600px;
     margin: 20px auto;
+    position: relative;
+    overflow: hidden;
 }
+
 .slides img {
     width: 100%;
-    border-radius: 10px;
+    height: auto;
+    display: none;
 }
+
+.slides img.active {
+    display: block;
+}
+
 .prev, .next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     background: rgba(0,0,0,0.5);
-    color: #fff;
+    color: white;
     border: none;
     padding: 10px;
     cursor: pointer;
 }
+
 .prev { left: 10px; }
 .next { right: 10px; }
 
-/* Акция */
 .promo {
-    margin: 30px auto;
-    padding: 20px;
-}
-.price {
-    font-size: 22px;
-    margin-top: 10px;
-}
-.old-price {
-    text-decoration: line-through;
-    margin-right: 10px;
-}
-.new-price {
-    color: #00ff00;
-    font-weight: bold;
-}
-.sale {
-    background: red;
-    color: white;
-    padding: 3px 8px;
-    border-radius: 5px;
-}
-.buttons {
-    margin-top: 15px;
-}
-.btn {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-}
-.btn-buy {
-    background: orange;
-    color: white;
-}
-.btn-outline {
-    border: 2px solid orange;
-    color: orange;
-    background: none;
-}
-
-/* Карточки */
-.card {
-    background: #34495e;
     margin: 20px auto;
     padding: 20px;
+    border: 2px solid #fff;
     border-radius: 10px;
-    max-width: 800px;
-    text-align: left;
+    background: rgba(0,0,0,0.2);
+    max-width: 400px;
 }
 
-/* Таймер (flip clock) */
-.flip-clock {
+.countdown {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
+    gap: 15px;
+    margin-top: 15px;
 }
-.flip-clock div {
+
+.countdown div {
     background: black;
     color: white;
-    font-size: 40px;
-    padding: 15px 20px;
+    padding: 10px 20px;
     border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+    font-size: 22px;
+    font-weight: bold;
 }
