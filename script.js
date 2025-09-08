@@ -1,45 +1,58 @@
-// Слайдер
-let slideIndex = 0;
-const slides = document.querySelectorAll(".slides img");
-const prev = document.querySelector(".prev");
-const next = document.querySelector(".next");
-
-function showSlide(n) {
-  slides.forEach((slide, i) => {
-    slide.classList.remove("active");
-    if (i === n) slide.classList.add("active");
-  });
+// Таймер с flip-анимацией
+function createFlipCard(label) {
+  return `
+    <div class="flip-card" data-label="${label}">
+      <div class="top">00</div>
+      <div class="bottom">00</div>
+      <span class="label">${label}</span>
+    </div>
+  `;
 }
 
-function changeSlide(dir) {
-  slideIndex += dir;
-  if (slideIndex >= slides.length) slideIndex = 0;
-  if (slideIndex < 0) slideIndex = slides.length - 1;
-  showSlide(slideIndex);
+function updateFlipCard(card, newNumber) {
+  const top = card.querySelector(".top");
+  const bottom = card.querySelector(".bottom");
+  const current = parseInt(top.textContent);
+
+  if (newNumber !== current) {
+    // Запуск анимации
+    card.classList.remove("animate");
+    void card.offsetWidth; // хак для перезапуска
+    card.classList.add("animate");
+
+    setTimeout(() => {
+      top.textContent = newNumber.toString().padStart(2, "0");
+      bottom.textContent = newNumber.toString().padStart(2, "0");
+    }, 250);
+  }
 }
 
-prev.addEventListener("click", () => changeSlide(-1));
-next.addEventListener("click", () => changeSlide(1));
+function startCountdown(duration) {
+  let timer = duration;
 
-showSlide(slideIndex);
+  const countdown = document.getElementById("countdown");
+  countdown.innerHTML = `
+    ${createFlipCard("Години")}
+    ${createFlipCard("Хвилини")}
+    ${createFlipCard("Секунди")}
+  `;
 
-// Таймер (24 години)
-let countdown = 24 * 60 * 60; // 24 часа в секундах
-const hoursEl = document.getElementById("hours");
-const minutesEl = document.getElementById("minutes");
-const secondsEl = document.getElementById("seconds");
+  const [hoursCard, minutesCard, secondsCard] =
+    countdown.querySelectorAll(".flip-card");
 
-function updateTimer() {
-  let h = Math.floor(countdown / 3600);
-  let m = Math.floor((countdown % 3600) / 60);
-  let s = countdown % 60;
+  setInterval(() => {
+    let hours = Math.floor(timer / 3600);
+    let minutes = Math.floor((timer % 3600) / 60);
+    let seconds = timer % 60;
 
-  hoursEl.textContent = h.toString().padStart(2, "0");
-  minutesEl.textContent = m.toString().padStart(2, "0");
-  secondsEl.textContent = s.toString().padStart(2, "0");
+    updateFlipCard(hoursCard, hours);
+    updateFlipCard(minutesCard, minutes);
+    updateFlipCard(secondsCard, seconds);
 
-  if (countdown > 0) countdown--;
+    if (--timer < 0) timer = duration;
+  }, 1000);
 }
 
-setInterval(updateTimer, 1000);
-updateTimer();
+window.onload = () => {
+  startCountdown(24 * 60 * 60); // 24 часа
+};
