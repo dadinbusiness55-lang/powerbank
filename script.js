@@ -1,28 +1,47 @@
-// Таймер с flip-анимацией
-function createFlipCard(label) {
+// Слайдер
+let slideIndex = 0;
+const slides = document.querySelectorAll(".slides img");
+const prev = document.querySelector(".prev");
+const next = document.querySelector(".next");
+
+function showSlide(n) {
+  slides.forEach(slide => slide.classList.remove("active"));
+  slides[n].classList.add("active");
+}
+showSlide(slideIndex);
+
+prev.addEventListener("click", () => {
+  slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+  showSlide(slideIndex);
+});
+next.addEventListener("click", () => {
+  slideIndex = (slideIndex + 1) % slides.length;
+  showSlide(slideIndex);
+});
+
+// ✅ Flip таймер
+function createFlip(label) {
   return `
     <div class="flip-card" data-label="${label}">
-      <div class="top">00</div>
-      <div class="bottom">00</div>
-      <span class="label">${label}</span>
+      <div class="digit top">00</div>
+      <div class="digit bottom">00</div>
     </div>
   `;
 }
 
-function updateFlipCard(card, newNumber) {
+function updateFlip(card, newValue) {
   const top = card.querySelector(".top");
   const bottom = card.querySelector(".bottom");
   const current = parseInt(top.textContent);
 
-  if (newNumber !== current) {
-    // Запуск анимации
+  if (newValue !== current) {
     card.classList.remove("animate");
-    void card.offsetWidth; // хак для перезапуска
+    void card.offsetWidth; // reset animation
     card.classList.add("animate");
 
     setTimeout(() => {
-      top.textContent = newNumber.toString().padStart(2, "0");
-      bottom.textContent = newNumber.toString().padStart(2, "0");
+      top.textContent = newValue.toString().padStart(2, "0");
+      bottom.textContent = newValue.toString().padStart(2, "0");
     }, 250);
   }
 }
@@ -32,9 +51,9 @@ function startCountdown(duration) {
 
   const countdown = document.getElementById("countdown");
   countdown.innerHTML = `
-    ${createFlipCard("Години")}
-    ${createFlipCard("Хвилини")}
-    ${createFlipCard("Секунди")}
+    ${createFlip("Години")}
+    ${createFlip("Хвилини")}
+    ${createFlip("Секунди")}
   `;
 
   const [hoursCard, minutesCard, secondsCard] =
@@ -45,9 +64,9 @@ function startCountdown(duration) {
     let minutes = Math.floor((timer % 3600) / 60);
     let seconds = timer % 60;
 
-    updateFlipCard(hoursCard, hours);
-    updateFlipCard(minutesCard, minutes);
-    updateFlipCard(secondsCard, seconds);
+    updateFlip(hoursCard, hours);
+    updateFlip(minutesCard, minutes);
+    updateFlip(secondsCard, seconds);
 
     if (--timer < 0) timer = duration;
   }, 1000);
