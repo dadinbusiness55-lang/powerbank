@@ -1,187 +1,143 @@
-// ✅ Слайдер
-let slideIndex = 0;
+/* === СЛАЙДЕР === */
 const slides = document.querySelector(".slides");
 const images = document.querySelectorAll(".slides img");
-const totalSlides = images.length;
+const prevBtn = document.querySelector(".prev");
+const nextBtn = document.querySelector(".next");
 const dots = document.querySelectorAll(".dot");
 
-function updateSlider() {
-    slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+let index = 0;
+
+function showSlide(i) {
+    if (i >= images.length) index = 0;
+    else if (i < 0) index = images.length - 1;
+    else index = i;
+
+    slides.style.transform = `translateX(${-index * 100}%)`;
+
     dots.forEach(dot => dot.classList.remove("active"));
-    dots[slideIndex].classList.add("active");
+    dots[index].classList.add("active");
 }
 
-document.querySelector(".next").addEventListener("click", () => {
-    slideIndex = (slideIndex + 1) % totalSlides;
-    updateSlider();
-});
-
-document.querySelector(".prev").addEventListener("click", () => {
-    slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
-    updateSlider();
-});
-
-dots.forEach((dot, index) => {
-    dot.addEventListener("click", () => {
-        slideIndex = index;
-        updateSlider();
-    });
-});
+nextBtn.addEventListener("click", () => showSlide(index + 1));
+prevBtn.addEventListener("click", () => showSlide(index - 1));
+dots.forEach((dot, i) => dot.addEventListener("click", () => showSlide(i)));
 
 // Автопрокрутка
-setInterval(() => {
-    slideIndex = (slideIndex + 1) % totalSlides;
-    updateSlider();
-}, 4000);
+setInterval(() => showSlide(index + 1), 5000);
 
-updateSlider();
+showSlide(index);
 
-
-// ✅ Lightbox (fullscreen просмотр с превью + стрелки)
+/* === LIGHTBOX === */
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
-const closeBtn = document.querySelector(".lightbox .close");
-const prevBtn = document.querySelector(".lightbox-prev");
-const nextBtn = document.querySelector(".lightbox-next");
-const thumbs = document.querySelectorAll(".thumbnails img");
+const closeBtn = document.querySelector(".close");
+const lightboxPrev = document.querySelector(".lightbox-prev");
+const lightboxNext = document.querySelector(".lightbox-next");
+const thumbnails = document.querySelectorAll(".thumbnails img");
 
-let currentImgIndex = 0;
+let currentLightboxIndex = 0;
 
-// Открыть фото из слайдера
-images.forEach((img, index) => {
-    img.addEventListener("click", () => {
-        slideIndex = index; // синхронизация
-        currentImgIndex = index;
-        lightbox.style.display = "flex";
-        updateLightbox();
-    });
-});
+function openLightbox(i) {
+    lightbox.style.display = "block";
+    showLightboxImage(i);
+}
 
-// Закрыть
-closeBtn.addEventListener("click", () => {
+function closeLightbox() {
     lightbox.style.display = "none";
-});
-
-// Клик вне фото — закрыть
-lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) {
-        lightbox.style.display = "none";
-    }
-});
-
-// Следующее фото
-nextBtn.addEventListener("click", () => {
-    currentImgIndex = (currentImgIndex + 1) % totalSlides;
-    slideIndex = currentImgIndex;
-    updateLightbox();
-    updateSlider();
-});
-
-// Предыдущее фото
-prevBtn.addEventListener("click", () => {
-    currentImgIndex = (currentImgIndex - 1 + totalSlides) % totalSlides;
-    slideIndex = currentImgIndex;
-    updateLightbox();
-    updateSlider();
-});
-
-// Клик по превью
-thumbs.forEach((thumb, index) => {
-    thumb.addEventListener("click", () => {
-        currentImgIndex = index;
-        slideIndex = index;
-        updateLightbox();
-        updateSlider();
-    });
-});
-
-function updateLightbox() {
-    lightboxImg.src = images[currentImgIndex].src;
-    thumbs.forEach((thumb, i) => {
-        thumb.classList.remove("active");
-        if (i === currentImgIndex) {
-            thumb.classList.add("active");
-        }
-    });
 }
 
-// Управление с клавиатуры
-document.addEventListener("keydown", (e) => {
-    if (lightbox.style.display === "flex") {
-        if (e.key === "ArrowRight") {
-            nextBtn.click();
-        } else if (e.key === "ArrowLeft") {
-            prevBtn.click();
-        } else if (e.key === "Escape") {
-            lightbox.style.display = "none";
-        }
-    }
-});
+function showLightboxImage(i) {
+    if (i >= images.length) currentLightboxIndex = 0;
+    else if (i < 0) currentLightboxIndex = images.length - 1;
+    else currentLightboxIndex = i;
 
+    lightboxImg.src = images[currentLightboxIndex].src;
 
-// ✅ Zoom с движением фото (на ПК)
+    thumbnails.forEach(thumb => thumb.classList.remove("active"));
+    thumbnails[currentLightboxIndex].classList.add("active");
+}
+
+images.forEach((img, i) => img.addEventListener("click", () => openLightbox(i)));
+thumbnails.forEach((thumb, i) => thumb.addEventListener("click", () => showLightboxImage(i)));
+closeBtn.addEventListener("click", closeLightbox);
+lightboxPrev.addEventListener("click", () => showLightboxImage(currentLightboxIndex - 1));
+lightboxNext.addEventListener("click", () => showLightboxImage(currentLightboxIndex + 1));
+
+/* === ZOOM === */
 const zoomContainer = document.querySelector(".zoom-container");
-const zoomImg = document.getElementById("lightbox-img");
 
-zoomContainer.addEventListener("mousemove", function(e) {
-    const rect = zoomContainer.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+if (zoomContainer) {
+    lightboxImg.addEventListener("mousemove", e => {
+        const { left, top, width, height } = lightboxImg.getBoundingClientRect();
+        const x = ((e.pageX - left) / width) * 100;
+        const y = ((e.pageY - top) / height) * 100;
+        lightboxImg.style.transformOrigin = `${x}% ${y}%`;
+        lightboxImg.style.transform = "scale(1.5)";
+    });
 
-    zoomImg.style.transformOrigin = `${x}% ${y}%`;
-    zoomImg.style.transform = "scale(2)";
-});
+    lightboxImg.addEventListener("mouseleave", () => {
+        lightboxImg.style.transform = "scale(1)";
+    });
 
-zoomContainer.addEventListener("mouseleave", function() {
-    zoomImg.style.transformOrigin = "center center";
-    zoomImg.style.transform = "scale(1)";
-});
-
-
-// ✅ На мобилках вместо зума — тап для увеличения
-function isMobile() {
-    return /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
-}
-
-if (isMobile()) {
-    zoomContainer.addEventListener("click", () => {
-        if (zoomImg.style.transform === "scale(2)") {
-            zoomImg.style.transform = "scale(1)";
+    // Тап на мобилке
+    lightboxImg.addEventListener("click", () => {
+        if (lightboxImg.style.transform === "scale(1.5)") {
+            lightboxImg.style.transform = "scale(1)";
         } else {
-            zoomImg.style.transform = "scale(2)";
-            zoomImg.style.transformOrigin = "center center";
+            lightboxImg.style.transform = "scale(1.5)";
+            lightboxImg.style.transformOrigin = "center center";
         }
     });
 }
 
+/* === SWIPE ДЛЯ МОБИЛЫ === */
+let startX = 0;
+slides.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+slides.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+    if (startX - endX > 50) showSlide(index + 1);
+    if (endX - startX > 50) showSlide(index - 1);
+});
 
-// ✅ Свайпы на мобильных
-let touchStartX = 0;
-let touchEndX = 0;
+/* === ТАЙМЕР АКЦИИ === */
+function getNextMidnight() {
+    let now = new Date();
+    let tomorrow = new Date(now);
+    tomorrow.setHours(24, 0, 0, 0);
+    return tomorrow.getTime();
+}
 
-lightbox.addEventListener("touchstart", (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-}, false);
+let countdownDate = getNextMidnight();
 
-lightbox.addEventListener("touchend", (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-}, false);
+function updateCountdown() {
+    let now = new Date().getTime();
+    let distance = countdownDate - now;
 
-function handleSwipe() {
-    const swipeDistance = touchEndX - touchStartX;
+    if (distance < 0) {
+        countdownDate = getNextMidnight();
+        distance = countdownDate - now;
+    }
 
-    if (swipeDistance > 50) {
-        // свайп вправо → предыдущее фото
-        currentImgIndex = (currentImgIndex - 1 + totalSlides) % totalSlides;
-        slideIndex = currentImgIndex;
-        updateLightbox();
-        updateSlider();
-    } else if (swipeDistance < -50) {
-        // свайп влево → следующее фото
-        currentImgIndex = (currentImgIndex + 1) % totalSlides;
-        slideIndex = currentImgIndex;
-        updateLightbox();
-        updateSlider();
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
+    document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
+    document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+
+    // Последний час
+    const lastHourMsg = document.getElementById("last-hour-msg");
+    const secondsEl = document.getElementById("seconds");
+    if (hours === 0) {
+        lastHourMsg.textContent = "⏳ Поспіши, залишилось менше години!";
+        lastHourMsg.style.display = "block";
+        secondsEl.classList.add("blink");
+    } else {
+        lastHourMsg.style.display = "none";
+        secondsEl.classList.remove("blink");
     }
 }
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
