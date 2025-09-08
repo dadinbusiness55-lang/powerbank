@@ -1,26 +1,19 @@
-function startCountdown(duration) {
-  let timer = duration, hours, minutes, seconds;
-  const flip = document.getElementById("flip-countdown");
+// Слайдер
+let slideIndex = 0;
+const slides = document.querySelectorAll(".slides img");
+const prev = document.querySelector(".prev");
+const next = document.querySelector(".next");
 
-  function update() {
-    hours = parseInt(timer / 3600, 10);
-    minutes = parseInt((timer % 3600) / 60, 10);
-    seconds = parseInt(timer % 60, 10);
-
-    flip.innerHTML = `
-      <div class="flip-unit">${hours.toString().padStart(2, '0')}<span class="flip-label">Год</span></div>
-      <div class="flip-unit">${minutes.toString().padStart(2, '0')}<span class="flip-label">Хв</span></div>
-      <div class="flip-unit">${seconds.toString().padStart(2, '0')}<span class="flip-label">Сек</span></div>
-    `;
-
-    if (--timer < 0) {
-      timer = 0;
-    }
-  }
-
-  update();
-  setInterval(update, 1000);
+function showSlide(n) {
+  slideIndex = (n + slides.length) % slides.length;
+  slides.forEach((s, i) => s.style.display = i === slideIndex ? "block" : "none");
 }
+prev.addEventListener("click", () => showSlide(slideIndex - 1));
+next.addEventListener("click", () => showSlide(slideIndex + 1));
+showSlide(0);
 
-// 24 часа = 86400 секунд
-startCountdown(24 * 60 * 60);
+// Flipdown таймер
+document.addEventListener("DOMContentLoaded", () => {
+  let end = new Date().getTime() + (24 * 60 * 60 * 1000);
+  new FlipDown(Math.floor(end / 1000)).start();
+});
